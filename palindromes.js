@@ -1,5 +1,5 @@
     
-    // Is the date valid ?
+// Is the date valid ?
 function isValidDate(stringDate) {
     let separateDate = stringDate.split("/")                          // --> String array
     console.log(separateDate)
@@ -27,7 +27,7 @@ function isValidDate(stringDate) {
 console.log(isValidDate("29/02/1988"))
 
 
-    // Check Max Days In Month
+// Check Max Days In Month
 function maxDaysInMonth(mois, jour, annee) {
     if ((mois === 1 || mois === 3 || mois === 5 || mois === 7 || mois === 8 || mois === 10 || mois === 12) && (jour > 0 && jour < 32)) {
         return true
@@ -45,6 +45,8 @@ function maxDaysInMonth(mois, jour, annee) {
 }
 
 
+
+// Is a palindrome ?
 function isPalindrome(stringDate) {
     let string = stringDate.split('/').join('')         // Remove '/'
     let stringArray = string.split('')                  // Split a string (into an array)
@@ -68,65 +70,24 @@ console.log(palindrome)
 
 
 
-
-    // STEP 3 (en cours)
-
-
-// "Keep" 0 when the month or day are less than 10
-function dontForgetZeroBeforeNumber(month, day) {       
-    let stringMonth = month.toString()
-    let stringDay = day.toString()
-
-    if (month < 10) {
-        stringMonth = "0" + stringMonth
-    }
-    if (day < 10) {
-        stringDay = "0" + stringDay
-    }
-    return {stringMonth, stringDay}
-}
-
-// Gets dates in the right format
-let date = new Date()
-let month = date.getMonth() + 1
-let year = date.getFullYear()
-let day = date.getDate()
-
-let {stringMonth, stringDay} = dontForgetZeroBeforeNumber(month, day)
-
-let today = `${stringDay}/${stringMonth}/${year}`
-console.log(today)
-
-
-function getNextDates(datesNumber) {
-    let arrayFutureDates = []
-
-    for (let i = 0; i < datesNumber; i++) {
-        date.setDate(date.getDate() + 1)
-        let updateMonth = date.getMonth() + 1
-        let updateYear = date.getFullYear()
-        let updateDay = date.getDate()
-
-        let {stringMonth, stringDay} = dontForgetZeroBeforeNumber(updateMonth, updateDay)
-        let updateDate = `${stringDay}/${stringMonth}/${updateYear}`
-
-        arrayFutureDates.push(updateDate)
-    }
-    return arrayFutureDates
-}
-
-let prochainesDates = getNextDates(10000)
-
-
-// Get palindromes
+// Next palindromes
 function getNextPalindromes(x) {
     let arrayPalindromes = []
-    for (let i = 0; i < x.length; i++) {
-        if (isPalindrome(x[i])) {
-            arrayPalindromes.push(x[i])
+    let date = new Date()               // Get today's date
+    const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric'
+    }
+    while (arrayPalindromes.length < x) {
+        let stringDate = date.toLocaleDateString('fr-FR', options)        // Get dates in the right format
+        date.setDate(date.getDate() + 1)                                  // Add 1 day to the date
+        if (isPalindrome(stringDate)) {
+            arrayPalindromes.push(stringDate)
         }
     }
-    return arrayPalindromes
+    return arrayPalindromes              // Return an array with the next x palindromes
 }
 
-console.log(getNextPalindromes(prochainesDates))
+console.log(getNextPalindromes(8))
+
